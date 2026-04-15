@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">雅思背单词</string>
+    <string name="tab_home">首页</string>
+    <string name="tab_study">学习</string>
+    <string name="tab_wordlist">词库</string>
+    <string name="tab_stats">统计</string>
+    <string name="btn_know">认识</string>
+    <string name="btn_fuzzy">模糊</string>
+    <string name="btn_unknown">不认识</string>
+    <string name="btn_speak">发音</string>
+    <string name="label_today_new">今日新学</string>
+    <string name="label_today_review">今日复习</string>
+    <string name="label_mastered">已掌握</string>
+    <string name="label_streak">连续打卡</string>
+    <string name="hint_search">搜索单词...</string>
+</resources>

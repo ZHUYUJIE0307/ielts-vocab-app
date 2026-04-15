@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>雅思背单词 App - UI 预览</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 430px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .phone-frame {
+            background: #1a1a2e;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .screen {
+            background: #f8f9fa;
+            border-radius: 32px;
+            min-height: 780px;
+            overflow: hidden;
+            position: relative;
+        }
+        .notch {
+            width: 120px;
+            height: 28px;
+            background: #1a1a2e;
+            border-radius: 0 0 16px 16px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        .notch::before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #2d2d44;
+            border-radius: 50%;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        /* Home Screen */
+        .home-screen {
+            padding: 20px;
+        }
+        .greeting {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+        .subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 24px;
+        }
+        .progress-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 24px;
+            padding: 24px;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .progress-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .progress-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        .action-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .action-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .action-card:hover {
+            transform: translateY(-2px);
+        }
+        .action-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        .action-icon.review {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .action-icon.library {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        .action-icon.stats {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        .action-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 4px;
+        }
+        .action-desc {
+            font-size: 12px;
+            color: #999;
+        }
+        .word-preview {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        .word-preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .word-preview-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+        .word-preview-link {
+            font-size: 14px;
+            color: #667eea;
+            cursor: pointer;
+        }
+        .word-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .word-item:last-child {
+            border-bottom: none;
+        }
+        .word-number {
+            width: 32px;
+            height: 32px;
+            background: #f0f0f5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            margin-right: 12px;
+        }
+        .word-info {
+            flex: 1;
+        }
+        .word-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+        .word-meaning {
+            font-size: 12px;
+            color: #999;
+        }
+        .word-star {
+            color: #ffd700;
+            font-size: 18px;
+        }
+        
+        /* Bottom Nav */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0 24px;
+            border-top: 1px solid #f0f0f0;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .nav-item.active {
+            color: #667eea;
+        }
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        .nav-item span {
+            font-size: 11px;
+        }
+        
+        /* Study Screen */
+        .study-screen {
+            height: 780px;
+            display: flex;
+            flex-direction: column;
+        }
+        .study-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a1a2e;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .study-progress {
+            font-size: 14px;
+            color: #666;
+        }
+        .study-progress strong {
+            color: #667eea;
+        }
+        .flashcard-container {
+            flex: 1;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .flashcard {
+            width: 100%;
+            height: 420px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+            position: relative;
+        }
+        .flashcard::before {
+            content: '点击查看释义';
+            position: absolute;
+            bottom: 20px;
+            font-size: 12px;
+            color: #999;
+        }
+        .flashcard.revealed::before {
+            display: none;
+        }
+        .flashcard-word {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+        .flashcard-phonetic {
+            font-size: 18px;
+            color: #667eea;
+            margin-bottom: 16px;
+        }
+        .flashcard-part {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+        .flashcard-meaning {
+            font-size: 20px;
+            color: #1a1a2e;
+            text-align: center;
+            padding: 0 24px;
+        }
+        .flashcard.hidden {
+            display: none;
+        }
+        .flashcard.revealed {
+            display: flex;
+        }
+        .action-buttons {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+        .action-btn {
+            flex: 1;
+            max-width: 140px;
+            padding: 16px;
+            border-radius: 16px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .action-btn:active {
+            transform: scale(0.95);
+        }
+        .action-btn.forgot {
+            background: #fee;
+            color: #f5576c;
+        }
+        .action-btn.remember {
+            background: #eef;
+            color: #667eea;
+        }
+        .action-btn.easy {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+        .speaker-btn {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Stats Screen */
+        .stats-screen {
+            padding: 20px;
+        }
+        .stats-header {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 24px;
+        }
+        .streak-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 24px;
+            padding: 24px;
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .streak-icon {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+        .streak-count {
+            font-size: 48px;
+            font-weight: 700;
+        }
+        .streak-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .stats-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        .stats-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+        .stats-label {
+            font-size: 14px;
+            color: #999;
+        }
+        .chart-placeholder {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 16px;
+        }
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 120px;
+            padding-top: 20px;
+        }
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        .bar {
+            width: 24px;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px 4px 0 0;
+            margin-bottom: 8px;
+        }
+        .bar-label {
+            font-size: 10px;
+            color: #999;
+        }
+        
+        /* Navigation Dots */
+        .nav-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+        .nav-dot {
+            width: 8px;
+            height: 8px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .nav-dot.active {
+            width: 24px;
+            border-radius: 4px;
+            background: white;
+        }
+        
+        .screen-container {
+            display: none;
+        }
+        .screen-container.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>雅思背单词 App</h1>
+            <p>Kotlin + Jetpack Compose</p>
+        </div>
+        
+        <div class="phone-frame">
+            <div class="screen">
+                <div class="notch"></div>
+                
+                <!-- Home Screen -->
+                <div class="screen-container active" id="home-screen">
+                    <div class="home-screen">
+                        <div class="greeting">早上好!</div>
+                        <div class="subtitle">今天继续加油背单词吧</div>
+                        
+                        <div class="progress-card">
+                            <div class="progress-header">
+                                <div class="progress-title">今日学习</div>
+                                <div class="progress-badge">连续 7 天</div>
+                            </div>
+                            <div class="progress-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">12</div>
+                                    <div class="stat-label">已学习</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">8</div>
+                                    <div class="stat-label">待复习</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">3569</div>
+                                    <div class="stat-label">总词汇</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="action-cards">
+                            <div class="action-card">
+                                <div class="action-icon">
+                                    <i class="ri-play-fill"></i>
+                                </div>
+                                <div class="action-title">开始学习</div>
+                                <div class="action-desc">每日 20 个新词</div>
+                            </div>
+                            <div class="action-card">
+                                <div class="action-icon review">
+                                    <i class="ri-repeat-2-fill"></i>
+                                </div>
+                                <div class="action-title">复习</div>
+                                <div class="action-desc">艾宾浩斯记忆</div>
+                            </div>
+                            <div class="action-card">
+                                <div class="action-icon library">
+                                    <i class="ri-book-2-fill"></i>
+                                </div>
+                                <div class="action-title">词库</div>
+                                <div class="action-desc">48 个 Word List</div>
+                            </div>
+                            <div class="action-card">
+                                <div class="action-icon stats">
+                                    <i class="ri-bar-chart-2-fill"></i>
+                                </div>
+                                <div class="action-title">统计</div>
+                                <div class="action-desc">学习进度</div>
+                            </div>
+                        </div>
+                        
+                        <div class="word-preview">
+                            <div class="word-preview-header">
+                                <div class="word-preview-title">今日精选</div>
+                                <div class="word-preview-link">查看全部 ></div>
+                            </div>
+                            <div class="word-item">
+                                <div class="word-number">1</div>
+                                <div class="word-info">
+                                    <div class="word-name">abandon <span style="color:#667eea;font-size:14px">/əˈbændən/</span></div>
+                                    <div class="word-meaning">v. 放弃，遗弃 n. 放纵</div>
+                                </div>
+                                <i class="ri-star-fill word-star"></i>
+                            </div>
+                            <div class="word-item">
+                                <div class="word-number">2</div>
+                                <div class="word-info">
+                                    <div class="word-name">ability <span style="color:#667eea;font-size:14px">/əˈbɪləti/</span></div>
+                                    <div class="word-meaning">n. 能力，能耐</div>
+                                </div>
+                                <i class="ri-star-fill word-star"></i>
+                            </div>
+                            <div class="word-item">
+                                <div class="word-number">3</div>
+                                <div class="word-info">
+                                    <div class="word-name">abnormal <span style="color:#667eea;font-size:14px">/æbˈnɔːrml/</span></div>
+                                    <div class="word-meaning">a. 反常的，异常的</div>
+                                </div>
+                                <i class="ri-star-line word-star" style="color:#ddd"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-nav">
+                        <div class="nav-item active">
+                            <i class="ri-home-4-fill"></i>
+                            <span>首页</span>
+                        </div>
+                        <div class="nav-item">
+                            <i class="ri-book-2-line"></i>
+                            <span>词库</span>
+                        </div>
+                        <div class="nav-item">
+                            <i class="ri-bar-chart-2-line"></i>
+                            <span>统计</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Study Screen -->
+                <div class="screen-container" id="study-screen">
+                    <div class="study-screen">
+                        <div class="study-header">
+                            <div class="back-btn">
+                                <i class="ri-arrow-left-s-line"></i>
+                            </div>
+                            <div class="study-progress">
+                                <strong>3</strong> / 20
+                            </div>
+                            <div style="width:40px"></div>
+                        </div>
+                        
+                        <div class="flashcard-container">
+                            <div class="flashcard" id="flashcard" onclick="toggleCard()">
+                                <div class="flashcard-word">abandon</div>
+                                <div class="flashcard-phonetic">/əˈbændən/</div>
+                                <div class="flashcard-part">v. 放弃，遗弃</div>
+                                <div class="flashcard-meaning hidden" id="meaning">
+                                    <div style="font-size:14px;color:#999;margin-bottom:8px">词根联想：a(无) + band(绑) + on → 解开束缚 → 放弃</div>
+                                    1. 放弃；抛弃<br>
+                                    2. 离弃；丢弃<br>
+                                    3. 终止；放弃（努力）
+                                </div>
+                                <button class="speaker-btn" onclick="event.stopPropagation(); speak()">
+                                    <i class="ri-volume-up-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="action-btn forgot" onclick="nextWord('forgot')">
+                                <i class="ri-close-line"></i> 不认识
+                            </button>
+                            <button class="action-btn remember" onclick="nextWord('remember')">
+                                <i class="ri-check-line"></i> 认识
+                            </button>
+                            <button class="action-btn easy" onclick="nextWord('easy')">
+                                <i class="ri-emotion-happy-line"></i> 很简单
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bottom-nav">
+                        <div class="nav-item">
+                            <i class="ri-home-4-line"></i>
+                            <span>首页</span>
+                        </div>
+                        <div class="nav-item">
+                            <i class="ri-book-2-line"></i>
+                            <span>词库</span>
+                        </div>
+                        <div class="nav-item">
+                            <i class="ri-bar-chart-2-line"></i>
+                            <span>统计</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats Screen -->
+                <div class="screen-container" id="stats-screen">
+                    <div class="stats-screen">
+                        <div class="stats-header">学习统计</div>
+                        
+                        <div class="streak-card">
+                            <div class="streak-icon">🔥</div>
+                            <div class="streak-count">7</div>
+                            <div class="streak-label">连续打卡天数</div>
+                        </div>
+                        
+                        <div class="stats-grid">
+                            <div class="stats-card">
+                                <div class="stats-value">356</div>
+                                <div class="stats-label">已学习单词</div>
+                            </div>
+                            <div class="stats-card">
+                                <div class="stats-value">128</div>
+                                <div class="stats-label">已掌握</div>
+                            </div>
+                            <div class="stats-card">
+                                <div class="stats-value">3213</div>
+                                <div class="stats-label">剩余单词</div>
+                            </div>
+                            <div class="stats-card">
+                                <div class="stats-value">89%</div>
+                                <div class="stats-label">正确率</div>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-placeholder">
+                            <div class="chart-title">本周学习趋势</div>
+                            <div class="bar-chart">
+                                <div class="bar-item">
+                                    <div class="bar" style="height:60px"></div>
+                                    <div class="bar-label">周一</div>
+                                </div>
+                                <div class="bar-item">
+                                    <div class="bar" style="height:80px"></div>
+                                    <div class="bar-label">周二</div>
+                                </div>
+                                <div class="bar-item">
+                                    <div class="bar" style="height:50px"></div>
+                                    <div class="bar-label">周三</div>
+                                </div>
+                                <div class="bar-item">
+                                    <div class="bar" style="height:90px"></div>
+                                    <div class="bar-label">周四</div>
+                                </div>
+                                <div class="bar-item">
+                                    <div class="bar" style="height:70px"></div>
+                                    <div class="bar-label">周五</div>
+                                </div>
+                                <div class="bar-item">
+                                    <div class="bar" style="height:100px"></div>
+                                    <div class="bar-label">周六</div>
+                                </div>
+                                <div class="bar-item">
+                                    <div class="bar" style="height:40px"></div>
+                                    <div class="bar-label">周日</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-nav">
+                        <div class="nav-item">
+                            <i class="ri-home-4-line"></i>
+                            <span>首页</span>
+                        </div>
+                        <div class="nav-item">
+                            <i class="ri-book-2-line"></i>
+                            <span>词库</span>
+                        </div>
+                        <div class="nav-item active">
+                            <i class="ri-bar-chart-2-fill"></i>
+                            <span>统计</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nav-dots">
+                    <div class="nav-dot active" onclick="showScreen('home')"></div>
+                    <div class="nav-dot" onclick="showScreen('study')"></div>
+                    <div class="nav-dot" onclick="showScreen('stats')"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showScreen(name) {
+            document.querySelectorAll('.screen-container').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
+            
+            document.getElementById(name + '-screen').classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function toggleCard() {
+            const card = document.getElementById('flashcard');
+            const meaning = document.getElementById('meaning');
+            card.classList.toggle('revealed');
+            meaning.classList.toggle('hidden');
+        }
+        
+        function speak() {
+            const utterance = new SpeechSynthesisUtterance('abandon');
+            utterance.lang = 'en-US';
+            speechSynthesis.speak(utterance);
+        }
+        
+        function nextWord(result) {
+            alert('选择: ' + result);
+        }
+        
+        // Bottom nav click handlers
+        document.querySelectorAll('.nav-item').forEach((item, index) => {
+            item.addEventListener('click', () => {
+                const screens = ['home', 'study', 'stats'];
+                document.querySelectorAll('.screen-container').forEach(s => s.classList.remove('active'));
+                document.querySelectorAll('.nav-dot').forEach(d => d.classList.remove('active'));
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                
+                document.getElementById(screens[index] + '-screen').classList.add('active');
+                document.querySelectorAll('.nav-dot')[index].classList.add('active');
+                item.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
